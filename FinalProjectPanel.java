@@ -50,9 +50,9 @@ class FinalProjectPanel extends JPanel
         
       //Setting all the number buttons to have a Windows system default esque look 
       
-      for(int i = 0; i < numberButtons.length; i++) {
-         numberButtons[i].addActionListener(new numberButtonListener());  
-      }
+      for(int j = 0; j < numberButtons.length; j++) {
+         numberButtons[j].addActionListener(new numberButtonListener());  
+      } 
       
       for(int h = 0; h < operationsButtons.length; h++) {
          operationsButtons[h].addActionListener(new operationsButtonListener()); 

@@ -36,6 +36,10 @@ class buttonPanel extends JPanel {
       // Setting all the number buttons to have a Windows system default esque look 
      /* for(int i = 0; i < numberButtons.length; i++) {
          numberButtons[i].setContentAreaFilled(false);
+         
+         
+         
+         
          numberButtons[i].setFocusPainted(false); 
       }*/
            

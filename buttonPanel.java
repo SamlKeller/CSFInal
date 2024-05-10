@@ -21,7 +21,7 @@ class buttonPanel extends JPanel {
       
       // Instantiating buttons
       for (int x = 0; x < 9; x++) {
-         numberButtons[x] = new JButton(x.toString());
+         numberButtons[x] = new JButton(Integer.toString(x));
       }
       
       operationsButtons[0] = new JButton("+");

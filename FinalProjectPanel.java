@@ -7,7 +7,7 @@ import javax.swing.border.*;
 import java.util.ArrayList;
 
 class FinalProjectPanel extends JPanel
-{
+{  
    //Fields 
    public static final int FRAME = 500;
    private static final Color BACKGROUND = new Color(255, 255, 255);

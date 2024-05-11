@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import javax.swing.border.*;
-import java.util.ArrayList;
+
 
 class buttonPanel extends JPanel {
 
@@ -32,17 +29,7 @@ class buttonPanel extends JPanel {
       operationsButtons[2] = new JButton("*");
       operationsButtons[3] = new JButton("/");
       operationsButtons[4] = new JButton("="); 
-           
-      // Setting all the number buttons to have a Windows system default esque look 
-     /* for(int i = 0; i < numberButtons.length; i++) {
-         numberButtons[i].setContentAreaFilled(false);
          
-         
-         
-         
-         numberButtons[i].setFocusPainted(false); 
-      }*/
-           
       // Setting operation buttons to have special colors
       for (int x = 0; x < 4; x++) {
          operationsButtons[x].setBackground(new Color(51, 205, 255));
@@ -50,10 +37,7 @@ class buttonPanel extends JPanel {
       
       operationsButtons[4].setBackground(new Color(51,153,255));
       
-          // Adding action listeners 
-      
-      // Adding buttons to panel
-           
+      // Adding the operation buttons to their list  
 
       for (int g = 0; g < operationsButtons.length; g++) {
          add(operationsButtons[g]);

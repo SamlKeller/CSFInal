@@ -1,8 +1,7 @@
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.*;
 
-public class FinalProjectDriver 
+
+public class FinalProjectDriver
 {
 
    public static void main(String[] args)

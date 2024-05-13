@@ -1,11 +1,14 @@
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class CartesianPlanePanel extends JPanel {
+public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     private ArrayList<Point> points;
-    private int xCenter, yCenter;
+    private double xMod, yMod;
+    private double xCenter, yCenter;
     private int scale = 50; // Adjust this value to change the initial scale
     private double zoomLevel = 1.0; // Initial zoom level
     private int numericScale = 5; // Scale of numeric values on the axes
@@ -27,6 +30,9 @@ public class CartesianPlanePanel extends JPanel {
                 }
             });
 
+            addMouseMotionListener(this);
+            addMouseListener(this);
+
             // Add mouse wheel zooming
             addMouseWheelListener(new MouseWheelListener() {
                 @Override
@@ -43,6 +49,43 @@ public class CartesianPlanePanel extends JPanel {
         }
     }
 
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        //fix clicking on drag start
+        xMod = (e.getX() - clickOriginx);
+        yMod = (e.getY() - clickOriginy);
+        repaint();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+    
+    public int clickOriginx, clickOriginy;
+    @Override
+    public void mousePressed(MouseEvent e) {
+        clickOriginx = e.getX();
+        clickOriginy = e.getY();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
     private void zoomIn() {
         if (zoomLevel < maxZoomLevel) {
             zoomLevel *= 1.2; 
@@ -56,6 +99,7 @@ public class CartesianPlanePanel extends JPanel {
             repaint();
         }
     }
+
 
     private Point getCartesianPoint(Point point) {
         int x = (int) ((point.x - xCenter) / (scale * zoomLevel));
@@ -114,20 +158,20 @@ public class CartesianPlanePanel extends JPanel {
 
         // Draw axes
         Dimension size = getSize();
-        xCenter = size.width / 2;
-        yCenter = size.height / 2;
-        g2d.drawLine(0, yCenter, size.width, yCenter);
-        g2d.drawLine(xCenter, 0, xCenter, size.height);
+        xCenter = (size.width / 2) + xMod;
+        yCenter = (size.height / 2) + yMod;
+        g2d.drawLine(0, (int)yCenter, size.width, (int)yCenter);
+        g2d.drawLine((int)xCenter, 0, (int)xCenter, size.height);
 
         // Draw lines
         for (int i = 0; i < points.size() - 1; i++) {
             Point p1 = points.get(i);
             Point p2 = points.get(i + 1);
-            int x1 = xCenter + (int) (p1.x * scale * zoomLevel);
-            int y1 = yCenter - (int) (p1.y * scale * zoomLevel);
-            int x2 = xCenter + (int) (p2.x * scale * zoomLevel);
-            int y2 = yCenter - (int) (p2.y * scale * zoomLevel);
-            g2d.drawLine(x1, y1, x2, y2);
+            double x1 = xCenter + (int) (p1.x * scale * zoomLevel);
+            double y1 = yCenter - (int) (p1.y * scale * zoomLevel);
+            double x2 = xCenter + (int) (p2.x * scale * zoomLevel);
+            double y2 = yCenter - (int) (p2.y * scale * zoomLevel);
+            g2d.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
         }
     }
 

@@ -4,10 +4,8 @@ import java.awt.*;
 
 class buttonPanel extends JPanel {
 
-   private double displayNumber = 0;   
    JButton[] numberButtons = new JButton[10];
    JButton[] operationsButtons = new JButton[5];
-   private char operator;
    double num1;
    double num2;    
 

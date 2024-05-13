@@ -14,7 +14,6 @@ public class CartesianPlanePanel extends JPanel {
     private int xCenter, yCenter;
     private int scale = 50;
     private double zoomLevel = 1.0;
-    private int numericScale = 5;
     private double maxZoomLevel = 10.0;
     private double minZoomLevel = 0.1;
 
@@ -63,18 +62,7 @@ public class CartesianPlanePanel extends JPanel {
             repaint();
         }
     }
-
-    /*
-     * The getCartesianPoint method converts a point from the coordinate system used for rendering
-     * the curve to the Cartesian coordinate system, taking into account the center coordinates,
-     * scale, and zoom level.
-     */
-    private Point getCartesianPoint(Point point) {
-        int x = (int) ((point.x - xCenter) / (scale * zoomLevel));
-        int y = (int) ((yCenter - point.y) / (scale * zoomLevel));
-        return new Point(x, y);
-    }
-
+   
     /*
      * The generatePoints method parses the given equation string and generates points for the
      * curve based on the coefficients of the equation. It returns false if the equation format

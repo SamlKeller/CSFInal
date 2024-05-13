@@ -1,11 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import javax.swing.border.*;
-import java.util.ArrayList;
-import java.awt.*;
-import javax.swing.*;
 import java.awt.geom.*;
 
 // Use StackOverflow thing i found 

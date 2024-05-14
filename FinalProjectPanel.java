@@ -15,6 +15,7 @@ class FinalProjectPanel extends JPanel
    private Graphics myBuffer; 
    private Timer t;
    private ArrayList<Animatable> animationObjects;
+   private int frameCounter; 
    private double displayNumber = 0;   
    JTextArea number = new JTextArea(Double.toString(displayNumber));
    JButton[] numberButtons = new JButton[10];

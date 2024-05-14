@@ -47,7 +47,11 @@ class FinalProjectPanel extends JPanel
       
       buttonPanel z = new buttonPanel();    
       numberButtons = z.getNumberButtons();
-      operationsButtons = z.getOperationsButtons();  
+      operationsButtons = z.getOperationsButtons();
+
+      CartesianPlanePanel e = new CartesianPlanePanel("y = x^3 - 2x^2 + x - 3"); 
+      
+        
         
       //Setting all the number buttons to have a Windows system default esque look 
       
@@ -62,7 +66,10 @@ class FinalProjectPanel extends JPanel
       z.setNumberButtons(numberButtons); 
       z.setOperationsButtons(operationsButtons);  
 
-      add(z, BorderLayout.SOUTH); 
+      add(z, BorderLayout.WEST); 
+      add(e, BorderLayout.CENTER);
+
+      e.setSize(600,600);
      
       t = new Timer(5, new AnimationListener());  
       t.start();  

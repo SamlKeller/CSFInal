@@ -15,6 +15,7 @@ class FinalProjectPanel extends JPanel
    private Graphics myBuffer; 
    private Timer t;
    private ArrayList<Animatable> animationObjects;
+   private int frameCounter; 
    private double displayNumber = 0;   
    JTextArea number = new JTextArea(Double.toString(displayNumber));
    JButton[] numberButtons = new JButton[10];
@@ -38,10 +39,9 @@ class FinalProjectPanel extends JPanel
       number.setBorder(new EmptyBorder(10,10,10,10));
       number.setFont(new Font("Calibri", Font.BOLD, 40));
       JPanel northPanel = new JPanel();
+      GridLayout northLayout = new GridLayout(1,3);
+      northPanel.setLayout(northLayout);
       northPanel.add(number);
-      JPanel testPanel = new JPanel();
-      testPanel.setBackground(Color.RED);
-      northPanel.add(testPanel); 
       add(northPanel, BorderLayout.NORTH);
       
       buttonPanel z = new buttonPanel();    
@@ -114,6 +114,34 @@ class FinalProjectPanel extends JPanel
       }
    }
    
+
+   private class TextAreaListener implements KeyListener {
+    private JTextArea textArea;
+
+    public TextAreaListener(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Not used
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Not used
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            String input = textArea.getText();
+            System.out.println("Input from JTextArea: " + input);
+            textArea.setText(""); // Clear the text area after printing
+        }
+    }
+}
+
    private class operationsButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
          if (e.getSource() == operationsButtons[0]) {

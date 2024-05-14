@@ -165,6 +165,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
 
         // Draw lines
         for (int i = 0; i < points.size() - 1; i++) {
+            g2d.setColor(Color.RED);
             Point p1 = points.get(i);
             Point p2 = points.get(i + 1);
             double x1 = xCenter + (int) (p1.x * scale * zoomLevel);

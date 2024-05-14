@@ -49,7 +49,7 @@ class FinalProjectPanel extends JPanel
       numberButtons = z.getNumberButtons();
       operationsButtons = z.getOperationsButtons();
 
-      CartesianPlanePanel e = new CartesianPlanePanel("y = x^3 - 2x^2 + x - 3"); 
+      CartesianPlanePanel e = new CartesianPlanePanel("y = x^9 + 2x^8 + x^7 + 5x^6 + 4x^5 - 2x^4 + x^3 + x^2 + x - 3"); 
       
         
         
@@ -117,31 +117,31 @@ class FinalProjectPanel extends JPanel
    
 
    private class TextAreaListener implements KeyListener {
-    private JTextArea textArea;
+      private JTextArea textArea;
 
-    public TextAreaListener(JTextArea textArea) {
-        this.textArea = textArea;
-    }
+      public TextAreaListener(JTextArea textArea) {
+         this.textArea = textArea;
+      }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // Not used
-    }
+      @Override
+      public void keyTyped(KeyEvent e) {
+         // Not used
+      }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // Not used
-    }
+      @Override
+      public void keyPressed(KeyEvent e) {
+         // Not used
+      }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+      @Override
+      public void keyReleased(KeyEvent e) {
+         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             String input = textArea.getText();
             System.out.println("Input from JTextArea: " + input);
             textArea.setText(""); // Clear the text area after printing
-        }
-    }
-}
+         }
+      }
+   }
 
    private class operationsButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {

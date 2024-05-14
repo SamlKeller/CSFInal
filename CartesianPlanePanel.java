@@ -4,6 +4,7 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     private ArrayList<Point> points;
@@ -112,26 +113,35 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         String[] parts = equation.split("=");
         if (parts.length != 2 || !parts[0].equalsIgnoreCase("y")) {
             return false; // Invalid equation format
-        }
+        }   
 
         String rhs = parts[1];
         String[] terms = rhs.split("(?=[+-])");
-        double a = 0, b = 0, c = 0, d = 0;
+        ArrayList list = new ArrayList<Double>();
 
-        for (String term : terms) {
-            if (term.endsWith("x^3")) {
-                a = parseCoefficient(term.substring(0, term.length() - 3));
-            } else if (term.endsWith("x^2")) {
-                b = parseCoefficient(term.substring(0, term.length() - 3));
-            } else if (term.endsWith("x")) {
-                c = parseCoefficient(term.substring(0, term.length() - 1));
-            } else {
-                d = parseCoefficient(term);
+        ArrayList justXList = new ArrayList<String>();
+
+        for (int x = 0; x < terms.length; x++) {
+            if (terms[x].toString().contains("x")) {
+                justXList.add(terms[x].toString());
             }
         }
 
-        for (int x = -100; x <= 100; x++) {
-            double y = a * Math.pow(x, 3) + b * Math.pow(x, 2) + c * x + d;
+        for (String term : terms) {
+            list.add(parseCoefficient(term.split("x")[0]));
+        }
+
+
+        for (int x = -100; x <= 100; x += 1) {
+            double y = 0;
+            for (int i = 0; i < list.size(); i++) {
+                //y = x^9 + 2x^8 + x^7 + 5x^6 + 4x^5 - 2x^4 + x^3 + x^2 + x - 3
+                if (justXList.size() - i - 1 > 0) {
+                    y += (double)list.get(i) * Math.pow(x, justXList.size() - i - 1);
+                } else {
+                    y += (double)list.get(i);
+                }
+            }
             points.add(new Point(x, (int) y));
         }
 
@@ -174,17 +184,5 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
             double y2 = yCenter - (int) (p2.y * scale * zoomLevel);
             g2d.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame("Cartesian Plane Panel");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setContentPane(new CartesianPlanePanel("y = x^3 - 2x^2 + x - 3")); // Provide the equation here
-                frame.setSize(600, 600);
-                frame.setVisible(true);
-            }
-        });
     }
 }

@@ -36,7 +36,13 @@ class FinalProjectPanel extends JPanel
       animationObjects = new ArrayList<Animatable>();        
       setLayout(new BorderLayout());
       
+      number.setBorder(new EmptyBorder(10,10,10,10));
+      number.setFont(new Font("Calibri", Font.BOLD, 40));
       JPanel northPanel = new JPanel();
+      GridLayout northLayout = new GridLayout(1,3);
+      northPanel.setLayout(northLayout);
+      northPanel.add(number);
+
       add(northPanel, BorderLayout.NORTH);
       
       buttonPanel z = new buttonPanel();    
@@ -45,12 +51,15 @@ class FinalProjectPanel extends JPanel
 
       CartesianPlanePanel e = new CartesianPlanePanel("y = x^3 - 2x^2 + x - 3"); 
       
+        
+        
+      //Setting all the number buttons to have a Windows system default esque look 
       
-      for (int j = 0; j < numberButtons.length; j++) {
+      for(int j = 0; j < numberButtons.length; j++) {
          numberButtons[j].addActionListener(new numberButtonListener());  
       } 
       
-      for (int h = 0; h < operationsButtons.length; h++) {
+      for(int h = 0; h < operationsButtons.length; h++) {
          operationsButtons[h].addActionListener(new operationsButtonListener()); 
       }
       

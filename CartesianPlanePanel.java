@@ -11,12 +11,15 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     private ArrayList<Point> points;
     private double xMod, yMod;
     private double xCenter, yCenter;
-    private int scale = 50; // Adjust this value to change the initial scale
+    private int scale = 425; // Adjust this value to change the initial scale
     private double zoomLevel = 1.0; // Initial zoom level
     private int numericScale = 5; // Scale of numeric values on the axes
-    private double maxZoomLevel = 10.0; // Maximum zoom level
+    private double maxZoomLevel = 1000; // Maximum zoom level
     private double minZoomLevel = 0.1; // Minimum zoom level
 
+    // Done: Fixed functions like x^5
+    // TODO: Fix negative functions like y=-x
+    
     public CartesianPlanePanel(String equation) {
         points = new ArrayList<>();
         if (generatePoints(equation)) {
@@ -117,7 +120,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         ArrayList<Double> coefficients = new ArrayList<>();
         ArrayList<Integer> exponents = new ArrayList<>();
 
-        // Regular expression to parse terms in the form ax^b, ax, or a
+        // Regular expression to parse terms in the form ax^b, ax, -ax^b, -ax, or a
         Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
         Matcher matcher = pattern.matcher(rhs);
 
@@ -132,7 +135,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
             exponents.add(exponent);
         }
 
-        for (int x = -100; x <= 100; x += 1) {
+        for (int x = -1000; x <= 1000; x += 1) {
             double y = 0;
             for (int i = 0; i < coefficients.size(); i++) {
                 y += coefficients.get(i) * Math.pow(x, exponents.get(i));
@@ -161,7 +164,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         if (exponent == null || exponent.isEmpty()) {
             return 1; // Default exponent is 1 for 'x'
         }
-
+    
         try {
             return Integer.parseInt(exponent);
         } catch (NumberFormatException e) {

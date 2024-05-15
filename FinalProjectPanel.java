@@ -164,40 +164,43 @@ class FinalProjectPanel extends JPanel {
     }
 
     private class operationsButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == operationsButtons[0]) {
-                num1 = Double.parseDouble(number.getText());
-                operator = '+';
-                number.setText("");
-            } else if (e.getSource() == operationsButtons[1]) {
-                num1 = Double.parseDouble(number.getText());
-                operator = '-';
-                number.setText("");
-            } else if (e.getSource() == operationsButtons[2]) {
-                num1 = Double.parseDouble(number.getText());
-                operator = '*';
-                number.setText("");
-            } else if (e.getSource() == operationsButtons[3]) {
-                num1 = Double.parseDouble(number.getText());
-                operator = '/';
-                number.setText("");
-            } else if (e.getSource() == operationsButtons[4]) {
-                num2 = Double.parseDouble(number.getText());
-
-                if (operator == '+') {
-                    displayNumber = num1 + num2;
-                    number.setText(Double.toString(displayNumber));
-                } else if (operator == '-') {
-                    displayNumber = num1 - num2;
-                    number.setText(Double.toString(displayNumber));
-                } else if (operator == '*') {
-                    displayNumber = num1 * num2;
-                    number.setText(Double.toString(displayNumber));
-                } else if (operator == '/') {
-                    displayNumber = num1 / num2;
-                    number.setText(Double.toString(displayNumber));
-                }
-            }
-        }
-    }
+      public void actionPerformed(ActionEvent e) {
+          if (e.getSource() == operationsButtons[0]) {
+              num1 = Double.parseDouble(number.getText());
+              operator = '+';
+              number.setText("");
+          } else if (e.getSource() == operationsButtons[1]) {
+              num1 = Double.parseDouble(number.getText());
+              operator = '-';
+              number.setText("");
+          } else if (e.getSource() == operationsButtons[2]) {
+              num1 = Double.parseDouble(number.getText());
+              operator = '*';
+              number.setText("");
+          } else if (e.getSource() == operationsButtons[3]) {
+              num1 = Double.parseDouble(number.getText());
+              operator = '/';
+              number.setText("");
+          } else if (e.getSource() == operationsButtons[4]) {
+              num2 = Double.parseDouble(number.getText());
+  
+              if (operator == '+') {
+                  displayNumber = num1 + num2;
+              } else if (operator == '-') {
+                  displayNumber = num1 - num2;
+              } else if (operator == '*') {
+                  displayNumber = num1 * num2;
+              } else if (operator == '/') {
+                  displayNumber = num1 / num2;
+              }
+  
+              // Update the graph with the calculated number
+              String equation = "y = " + displayNumber;
+              updateGraph(equation);
+  
+              // Update the JTextArea with the calculated number
+              number.setText(Double.toString(displayNumber));
+          }
+      }
+  }
 }

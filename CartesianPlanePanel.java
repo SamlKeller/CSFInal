@@ -1,10 +1,11 @@
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
-
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     private ArrayList<Point> points;
@@ -50,10 +51,9 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         }
     }
 
-
     @Override
     public void mouseDragged(MouseEvent e) {
-        //fix clicking on drag start
+        // Fix clicking on drag start
         xMod = (e.getX() - clickOriginx);
         yMod = (e.getY() - clickOriginy);
         repaint();
@@ -63,11 +63,10 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     public void mouseMoved(MouseEvent e) {
     }
 
-    
     @Override
     public void mouseClicked(MouseEvent e) {
     }
-    
+
     public int clickOriginx, clickOriginy;
     @Override
     public void mousePressed(MouseEvent e) {
@@ -89,7 +88,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
 
     private void zoomIn() {
         if (zoomLevel < maxZoomLevel) {
-            zoomLevel *= 1.2; 
+            zoomLevel *= 1.2;
             repaint();
         }
     }
@@ -100,7 +99,6 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
             repaint();
         }
     }
-
 
     private Point getCartesianPoint(Point point) {
         int x = (int) ((point.x - xCenter) / (scale * zoomLevel));
@@ -113,34 +111,31 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         String[] parts = equation.split("=");
         if (parts.length != 2 || !parts[0].equalsIgnoreCase("y")) {
             return false; // Invalid equation format
-        }   
+        }
 
         String rhs = parts[1];
-        String[] terms = rhs.split("(?=[+-])");
-        ArrayList list = new ArrayList<Double>();
+        ArrayList<Double> coefficients = new ArrayList<>();
+        ArrayList<Integer> exponents = new ArrayList<>();
 
-        ArrayList justXList = new ArrayList<String>();
+        // Regular expression to parse terms in the form ax^b, ax, or a
+        Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
+        Matcher matcher = pattern.matcher(rhs);
 
-        for (int x = 0; x < terms.length; x++) {
-            if (terms[x].toString().contains("x")) {
-                justXList.add(terms[x].toString());
-            }
+        while (matcher.find()) {
+            String coeffStr = matcher.group(1);
+            String exponentStr = matcher.group(3);
+
+            double coefficient = parseCoefficient(coeffStr);
+            int exponent = parseExponent(exponentStr);
+
+            coefficients.add(coefficient);
+            exponents.add(exponent);
         }
-
-        for (String term : terms) {
-            list.add(parseCoefficient(term.split("x")[0]));
-        }
-
 
         for (int x = -100; x <= 100; x += 1) {
             double y = 0;
-            for (int i = 0; i < list.size(); i++) {
-                //y = x^9 + 2x^8 + x^7 + 5x^6 + 4x^5 - 2x^4 + x^3 + x^2 + x - 3
-                if (justXList.size() - i - 1 > 0) {
-                    y += (double)list.get(i) * Math.pow(x, justXList.size() - i - 1);
-                } else {
-                    y += (double)list.get(i);
-                }
+            for (int i = 0; i < coefficients.size(); i++) {
+                y += coefficients.get(i) * Math.pow(x, exponents.get(i));
             }
             points.add(new Point(x, (int) y));
         }
@@ -149,14 +144,28 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     }
 
     private double parseCoefficient(String coefficient) {
-        if (coefficient.isEmpty()) {
+        if (coefficient == null || coefficient.isEmpty() || coefficient.equals("+")) {
             return 1.0; // Default coefficient for missing term
+        } else if (coefficient.equals("-")) {
+            return -1.0; // Coefficient is -1
         }
 
         try {
             return Double.parseDouble(coefficient);
         } catch (NumberFormatException e) {
             return 0.0; // Fallback to 0 for invalid coefficients
+        }
+    }
+
+    private int parseExponent(String exponent) {
+        if (exponent == null || exponent.isEmpty()) {
+            return 1; // Default exponent is 1 for 'x'
+        }
+
+        try {
+            return Integer.parseInt(exponent);
+        } catch (NumberFormatException e) {
+            return 0; // Fallback to 0 for invalid exponents, which means 'x' is just a constant term
         }
     }
 
@@ -173,16 +182,23 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         g2d.drawLine(0, (int)yCenter, size.width, (int)yCenter);
         g2d.drawLine((int)xCenter, 0, (int)xCenter, size.height);
 
-        // Draw lines
-        for (int i = 0; i < points.size() - 1; i++) {
+        // Draw smooth line
+        if (!points.isEmpty()) {
+            Path2D path = new Path2D.Double();
+            Point firstPoint = points.get(0);
+            double startX = xCenter + firstPoint.x * scale * zoomLevel;
+            double startY = yCenter - firstPoint.y * scale * zoomLevel;
+            path.moveTo(startX, startY);
+
+            for (int i = 1; i < points.size(); i++) {
+                Point p = points.get(i);
+                double x = xCenter + p.x * scale * zoomLevel;
+                double y = yCenter - p.y * scale * zoomLevel;
+                path.lineTo(x, y);
+            }
+
             g2d.setColor(Color.RED);
-            Point p1 = points.get(i);
-            Point p2 = points.get(i + 1);
-            double x1 = xCenter + (int) (p1.x * scale * zoomLevel);
-            double y1 = yCenter - (int) (p1.y * scale * zoomLevel);
-            double x2 = xCenter + (int) (p2.x * scale * zoomLevel);
-            double y2 = yCenter - (int) (p2.y * scale * zoomLevel);
-            g2d.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
+            g2d.draw(path);
         }
     }
 }

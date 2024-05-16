@@ -126,6 +126,8 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
 
         while (matcher.find()) {
             String coeffStr = matcher.group(1);
+            System.out.println(coeffStr);
+            System.out.println(coeffStr.length());
             String exponentStr = matcher.group(3);
 
             double coefficient = parseCoefficient(coeffStr);
@@ -134,6 +136,9 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
             coefficients.add(coefficient);
             exponents.add(exponent);
         }
+
+        coefficients.remove(coefficients.size()- 1);
+        System.out.println(coefficients.toString());
 
         for (int x = -1000; x <= 1000; x += 1) {
             double y = 0;
@@ -147,9 +152,11 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     }
 
     private double parseCoefficient(String coefficient) {
-        if (coefficient == null || coefficient.isEmpty() || coefficient.equals("+")) {
+        if ((coefficient == null || coefficient.isEmpty() || coefficient.equals("+"))) {
+            System.out.println("pos coeff");
             return 1.0; // Default coefficient for missing term
         } else if (coefficient.equals("-")) {
+            System.out.println("neg coeff");
             return -1.0; // Coefficient is -1
         }
 

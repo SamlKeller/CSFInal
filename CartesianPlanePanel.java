@@ -5,11 +5,13 @@ import java.awt.event.*;
 import java.awt.geom.Path2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
+
 
 
 public class CartesianPlanePanel extends JPanel implements MouseInputListener {
@@ -219,21 +221,23 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
         Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
         Matcher matcher = pattern.matcher(rhs);
 
+
         while (matcher.find()) {
             String coeffStr = matcher.group(1);
-            System.out.println(coeffStr);
-            System.out.println(coeffStr.length());
             String exponentStr = matcher.group(3);
+            System.out.println(exponentStr);
 
             double coefficient = parseCoefficient(coeffStr);
             int exponent = parseExponent(exponentStr);
 
             coefficients.add(coefficient);
             exponents.add(exponent);
+
         }
+        
 
         coefficients.remove(coefficients.size()- 1);
-        System.out.println(coefficients.toString());
+        exponents.remove(exponents.size()- 1);
 
         for (int x = -1000; x <= 1000; x += 1) {
             double y = 0;
@@ -243,15 +247,14 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
             points.add(new Point(x, (int) y));
         }
 
+
         return true;
     }
 
     private double parseCoefficient(String coefficient) {
         if ((coefficient == null || coefficient.isEmpty() || coefficient.equals("+"))) {
-            System.out.println("pos coeff");
             return 1.0; // Default coefficient for missing term
         } else if (coefficient.equals("-")) {
-            System.out.println("neg coeff");
             return -1.0; // Coefficient is -1
         }
 
@@ -263,6 +266,7 @@ public class CartesianPlanePanel extends JPanel implements MouseInputListener {
     }
 
     private int parseExponent(String exponent) {
+        System.out.print(exponent);
         if (exponent == null || exponent.isEmpty()) {
             return 1; // Default exponent is 1 for 'x'
         }

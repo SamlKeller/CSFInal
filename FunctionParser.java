@@ -1,36 +1,59 @@
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FunctionParser {
+    private FunctionValidator validator;
+    private CoefficientParser coefficientParser;
+    private ExponentParser exponentParser;
+
+    public FunctionParser() {
+        validator = new FunctionValidator();
+        coefficientParser = new CoefficientParser();
+        exponentParser = new ExponentParser();
+    }
+
     public boolean isValidEquation(String equation) {
+        return validator.isValidEquation(equation);
+    }
+
+    public ArrayList<Double> parseCoefficients(String equation) {
+        ArrayList<Double> coefficients = new ArrayList<>();
         equation = equation.replaceAll("\s", ""); // Remove whitespace
         String[] parts = equation.split("=");
-        return parts.length == 2 && parts[0].equalsIgnoreCase("y");
+        String rhs = parts[1];
+
+        Pattern pattern = Pattern.compile(("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?"));
+        Matcher matcher = pattern.matcher(rhs);
+
+        while (matcher.find()) {
+            String coeffStr = matcher.group(1);
+            double coefficient = coefficientParser.parseCoefficient(coeffStr);
+            coefficients.add(coefficient);
+        }
+
+        coefficients.remove(coefficients.size() - 1);
+        coefficients.remove(coefficients.size() - 1); // Remove last coefficient
+        System.out.println(coefficients);
+        return coefficients;
     }
 
-    public double parseCoefficient(String coefficient) {
-        if ((coefficient == null || coefficient.isEmpty() || coefficient.equals("+"))) {
-            return 1.0; // Default coefficient for missing term
-        } else if (coefficient.equals("-")) {
-            return -1.0; // Coefficient is -1
+    public ArrayList<Integer> parseExponents(String equation) {
+        ArrayList<Integer> exponents = new ArrayList<>();
+        equation = equation.replaceAll("\s", ""); // Remove whitespace
+        String[] parts = equation.split("=");
+        String rhs = parts[1];
+
+        Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
+        Matcher matcher = pattern.matcher(rhs);
+
+        while (matcher.find()) {
+            String exponentStr = matcher.group(3);
+            int exponent = exponentParser.parseExponent(exponentStr);
+            exponents.add(exponent);
         }
 
-        try {
-            return Double.parseDouble(coefficient);
-        } catch (NumberFormatException e) {
-            return 0.0; // Fallback to 0 for invalid coefficients
-        }
-    }
-
-    public int parseExponent(String exponent) {
-        if (exponent == null || exponent.isEmpty()) {
-            return 1; // Default exponent is 1 for 'x'
-        }
-
-        try {
-            return Integer.parseInt(exponent);
-        } catch (NumberFormatException e) {
-            return 0; // Fallback to 0 for invalid exponents, which means 'x' is just a constant term
-        }
+        exponents.remove(exponents.size() - 1); // Remove last exponent
+        return exponents;
     }
 }

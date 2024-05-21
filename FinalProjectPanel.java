@@ -109,12 +109,12 @@ class FinalProjectPanel extends JPanel {
     private class TextAreaListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-            // Not used
+            // This has to be here for the interface to work
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            // Not used
+            // This has to be here for the interface to work
         }
 
         @Override

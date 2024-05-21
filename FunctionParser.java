@@ -53,7 +53,9 @@ public class FunctionParser {
             exponents.add(exponent);
         }
 
+        exponents.remove(exponents.size() - 1);
         exponents.remove(exponents.size() - 1); // Remove last exponent
+        System.out.println(exponents);
         return exponents;
     }
 }

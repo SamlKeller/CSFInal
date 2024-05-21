@@ -4,10 +4,12 @@ import java.awt.geom.*;
 
 // Use StackOverflow thing i found 
 
+//Eshan copied this from stackoverflow, doesn't know what it does lol
+
 public class graphingPanel extends JPanel {
 
-    int[] coordinates={100,20};
-    int mar=50;
+    int[] coordinates = {100, 20};
+    int mar = 50;
     
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

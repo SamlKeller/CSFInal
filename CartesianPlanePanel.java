@@ -61,9 +61,7 @@ public class CartesianPlanePanel extends JPanel {
 
             for (int i = 1; i < points.size(); i++) {
                 Point p = points.get(i);
-                double x = xCenter + p.x * scale * zoomLevel;
-                double y = yCenter - p.y * scale * zoomLevel;
-                path.lineTo(x, y);
+                path.lineTo(xCenter + p.x * scale * zoomLevel, yCenter - p.y * scale * zoomLevel);
             }
 
             g2d.setColor(Color.RED);

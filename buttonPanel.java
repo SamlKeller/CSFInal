@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-
 class buttonPanel extends JPanel {
 
    JButton[] numberButtons = new JButton[10];
@@ -42,7 +41,7 @@ class buttonPanel extends JPanel {
       }
       
       
-   }  
+   }
    
    
   public JButton[] getNumberButtons() {

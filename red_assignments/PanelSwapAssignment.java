@@ -67,10 +67,7 @@ class AddPanel extends JPanel {
 
     private class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int num1 = Integer.parseInt(field1.getText());
-            int num2 = Integer.parseInt(field2.getText());
-            int sum = num1 + num2;
-            myOwner.switchSubpanels(sum);
+            myOwner.switchSubpanels(Integer.parseInt(field1.getText()) + Integer.parseInt(field2.getText()));
         }
     }
 }

@@ -154,8 +154,7 @@ class TJStudent {
     }
 
     private boolean isValidYear(String year) {
-        return year.equalsIgnoreCase("Freshman") || year.equalsIgnoreCase("Sophomore") ||
-                year.equalsIgnoreCase("Junior") || year.equalsIgnoreCase("Senior");
+        return year.equalsIgnoreCase("Freshman") || year.equalsIgnoreCase("Sophomore") || year.equalsIgnoreCase("Junior") || year.equalsIgnoreCase("Senior");
     }
 
     private boolean isValidAge(int age) {

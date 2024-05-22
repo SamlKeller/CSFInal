@@ -19,10 +19,11 @@ public class FunctionParser {
 
     public ArrayList<Double> parseCoefficients(String equation) {
         ArrayList<Double> coefficients = new ArrayList<>();
-        equation = equation.replaceAll("\s", ""); // Remove whitespace
+        equation = equation.replaceAll("\\s", ""); // Remove whitespace
         String[] parts = equation.split("=");
         String rhs = parts[1];
 
+        //Unclear why we're using regex here or what it does
         Pattern pattern = Pattern.compile(("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?"));
         Matcher matcher = pattern.matcher(rhs);
 
@@ -34,28 +35,25 @@ public class FunctionParser {
 
         coefficients.remove(coefficients.size() - 1);
         coefficients.remove(coefficients.size() - 1); // Remove last coefficient
-        System.out.println(coefficients);
         return coefficients;
     }
 
     public ArrayList<Integer> parseExponents(String equation) {
         ArrayList<Integer> exponents = new ArrayList<>();
-        equation = equation.replaceAll("\s", ""); // Remove whitespace
+        equation = equation.replaceAll("\\s", ""); // Remove whitespace
         String[] parts = equation.split("=");
         String rhs = parts[1];
 
+        //same here
         Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
         Matcher matcher = pattern.matcher(rhs);
 
         while (matcher.find()) {
-            String exponentStr = matcher.group(3);
-            int exponent = exponentParser.parseExponent(exponentStr);
-            exponents.add(exponent);
+            exponents.add(exponentParser.parseExponent(matcher.group(3)));
         }
 
         exponents.remove(exponents.size() - 1);
         exponents.remove(exponents.size() - 1); // Remove last exponent
-        System.out.println(exponents);
         return exponents;
     }
 }

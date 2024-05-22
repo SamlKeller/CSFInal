@@ -5,8 +5,8 @@ import java.awt.image.*;
 import javax.swing.border.*;
 import java.util.ArrayList;
 
-class FinalProjectPanel extends JPanel {
-    //Fields
+public class FinalProjectPanel extends JPanel implements SwitchablePanel {
+    // Fields
     public static final int FRAME = 500;
     private static final Color BACKGROUND = new Color(255, 255, 255);
     private BufferedImage myImage;
@@ -47,7 +47,7 @@ class FinalProjectPanel extends JPanel {
 
         CartesianPlanePanel e = new CartesianPlanePanel("y = x^9 ");
 
-        //Setting all the number buttons to have a Windows system default esque look
+        // Setting all the number buttons to have a Windows system default esque look
 
         for (int j = 0; j < numberButtons.length; j++) {
             numberButtons[j].addActionListener(new numberButtonListener());
@@ -164,43 +164,53 @@ class FinalProjectPanel extends JPanel {
     }
 
     private class operationsButtonListener implements ActionListener {
-      public void actionPerformed(ActionEvent e) {
-          if (e.getSource() == operationsButtons[0]) {
-              num1 = Double.parseDouble(number.getText());
-              operator = '+';
-              number.setText("");
-          } else if (e.getSource() == operationsButtons[1]) {
-              num1 = Double.parseDouble(number.getText());
-              operator = '-';
-              number.setText("");
-          } else if (e.getSource() == operationsButtons[2]) {
-              num1 = Double.parseDouble(number.getText());
-              operator = '*';
-              number.setText("");
-          } else if (e.getSource() == operationsButtons[3]) {
-              num1 = Double.parseDouble(number.getText());
-              operator = '/';
-              number.setText("");
-          } else if (e.getSource() == operationsButtons[4]) {
-              num2 = Double.parseDouble(number.getText());
-  
-              if (operator == '+') {
-                  displayNumber = num1 + num2;
-              } else if (operator == '-') {
-                  displayNumber = num1 - num2;
-              } else if (operator == '*') {
-                  displayNumber = num1 * num2;
-              } else if (operator == '/') {
-                  displayNumber = num1 / num2;
-              }
-  
-              // Update the graph with the calculated number
-              String equation = "y = " + displayNumber;
-              updateGraph(equation);
-  
-              // Update the JTextArea with the calculated number
-              number.setText(Double.toString(displayNumber));
-          }
-      }
-  }
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == operationsButtons[0]) {
+                num1 = Double.parseDouble(number.getText());
+                operator = '+';
+                number.setText("");
+            } else if (e.getSource() == operationsButtons[1]) {
+                num1 = Double.parseDouble(number.getText());
+                operator = '-';
+                number.setText("");
+            } else if (e.getSource() == operationsButtons[2]) {
+                num1 = Double.parseDouble(number.getText());
+                operator = '*';
+                number.setText("");
+            } else if (e.getSource() == operationsButtons[3]) {
+                num1 = Double.parseDouble(number.getText());
+                operator = '/';
+                number.setText("");
+            } else if (e.getSource() == operationsButtons[4]) {
+                num2 = Double.parseDouble(number.getText());
+
+                if (operator == '+') {
+                    displayNumber = num1 + num2;
+                } else if (operator == '-') {
+                    displayNumber = num1 - num2;
+                } else if (operator == '*') {
+                    displayNumber = num1 * num2;
+                } else if (operator == '/') {
+                    displayNumber = num1 / num2;
+                }
+
+                // Update the graph with the calculated number
+                String equation = "y = " + displayNumber;
+                updateGraph(equation);
+
+                // Update the JTextArea with the calculated number
+                number.setText(Double.toString(displayNumber));
+            }
+        }
+    }
+
+    @Override
+    public void switchTo() {
+        // Implementation for switching to this panel
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
+    }
 }

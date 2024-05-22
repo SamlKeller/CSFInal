@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TitleScreenPanel extends JPanel {
+public class TitleScreenPanel extends JPanel implements SwitchablePanel {
     private MainFrame mainFrame;
     private Timer timer;
     private List<Animatable> animations;
@@ -62,5 +62,15 @@ public class TitleScreenPanel extends JPanel {
         for (Animatable anim : animations) {
             anim.drawMe(g);
         }
+    }
+
+    @Override
+    public void switchTo() {
+        // Implementation for switching to this panel
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this;
     }
 }

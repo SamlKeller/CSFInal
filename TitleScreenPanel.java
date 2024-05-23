@@ -15,7 +15,9 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
         setBackground(Color.WHITE);
 
         JLabel titleLabel = new JLabel("Graphing Calculator", JLabel.CENTER);
+        JLabel subtitle = new JLabel("Click anywhere to start", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 28));
         setLayout(null);  // Use absolute positioning
 
         int panelWidth = 800; // Assume a fixed width for the panel
@@ -34,7 +36,9 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
         int labelY = squareY + squareSize + 20;
 
         titleLabel.setBounds((panelWidth - 500) / 2, labelY, 500, 50);  // Center the label
+        subtitle.setBounds((panelWidth - 500) / 2, labelY + 50, 500, 50);
         add(titleLabel);
+        add(subtitle);
 
         animations = new ArrayList<>();
         // Outer square

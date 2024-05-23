@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class FunctionParser {
     private CoefficientParser coefficientParser;
@@ -15,19 +13,50 @@ public class FunctionParser {
         ArrayList<Double> coefficients = new ArrayList<>();
         equation = equation.replaceAll("\\s", ""); // Remove whitespace
         String[] parts = equation.split("=");
+        if (parts.length != 2) {
+            return coefficients; // Invalid equation format
+        }
         String rhs = parts[1];
 
-        //Unclear why we're using regex here or what it does
-        Pattern pattern = Pattern.compile(("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?"));
-        Matcher matcher = pattern.matcher(rhs);
+        int i = 0;
+        while (i < rhs.length()) {
+            StringBuilder coeffStr = new StringBuilder();
+            boolean hasX = false;
 
-        while (matcher.find()) {
-            String coeffStr = matcher.group(1);
-            double coefficient = coefficientParser.parseCoefficient(coeffStr);
+            // Read the sign
+            if (i < rhs.length() && (rhs.charAt(i) == '+' || rhs.charAt(i) == '-')) {
+                coeffStr.append(rhs.charAt(i));
+                i++;
+            }
+
+            // Read the coefficient
+            while (i < rhs.length() && (Character.isDigit(rhs.charAt(i)) || rhs.charAt(i) == '.')) {
+                coeffStr.append(rhs.charAt(i));
+                i++;
+            }
+
+            // Check for 'x'
+            if (i < rhs.length() && rhs.charAt(i) == 'x') {
+                hasX = true;
+                i++;
+            }
+
+            double coefficient = coefficientParser.parseCoefficient(coeffStr.toString());
+            if (!hasX && coeffStr.length() == 0) {
+                coefficient = 1.0; // If no coefficient, assume it's 1
+            }
             coefficients.add(coefficient);
+
+            // Skip exponent part
+            if (i < rhs.length() && rhs.charAt(i) == '^') {
+                i++;
+                while (i < rhs.length() && Character.isDigit(rhs.charAt(i))) {
+                    i++;
+                }
+            }
         }
 
-        coefficients.remove(coefficients.size() - 1);
+        // Remove the last coefficient which is not part of a valid term
     
         return coefficients;
     }
@@ -36,17 +65,46 @@ public class FunctionParser {
         ArrayList<Integer> exponents = new ArrayList<>();
         equation = equation.replaceAll("\\s", ""); // Remove whitespace
         String[] parts = equation.split("=");
+        if (parts.length != 2) {
+            return exponents; // Invalid equation format
+        }
         String rhs = parts[1];
 
-        //same here
-        Pattern pattern = Pattern.compile("([+-]?\\d*\\.?\\d*)(x\\^?(\\d*))?");
-        Matcher matcher = pattern.matcher(rhs);
+        int i = 0;
+        while (i < rhs.length()) {
+            // Skip coefficient part
+            if (i < rhs.length() && (rhs.charAt(i) == '+' || rhs.charAt(i) == '-')) {
+                i++;
+            }
+            while (i < rhs.length() && (Character.isDigit(rhs.charAt(i)) || rhs.charAt(i) == '.')) {
+                i++;
+            }
 
-        while (matcher.find()) {
-            exponents.add(exponentParser.parseExponent(matcher.group(3)));
+            // Check for 'x'
+            if (i < rhs.length() && rhs.charAt(i) == 'x') {
+                i++;
+                // Check for exponent part
+                if (i < rhs.length() && rhs.charAt(i) == '^') {
+                    i++;
+                    StringBuilder exponentStr = new StringBuilder();
+                    while (i < rhs.length() && Character.isDigit(rhs.charAt(i))) {
+                        exponentStr.append(rhs.charAt(i));
+                        i++;
+                    }
+                    int exponent = exponentParser.parseExponent(exponentStr.toString());
+                    exponents.add(exponent);
+                } else {
+                    exponents.add(1); // If no exponent, assume it's 1
+                }
+            } else {
+                exponents.add(0); // If no 'x', the exponent is 0
+            }
         }
 
-        exponents.remove(exponents.size() - 1);
+        // Remove the last exponent which is not part of a valid term
+        
+
+        System.out.println(exponents);
         return exponents;
     }
 }

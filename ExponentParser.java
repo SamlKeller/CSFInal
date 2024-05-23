@@ -13,5 +13,4 @@ public class ExponentParser {
     }
 }
 
-5^0 1
 

@@ -44,7 +44,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         numberButtons = z.getNumberButtons();
         operationsButtons = z.getOperationsButtons();
 
-        CartesianPlanePanel e = new CartesianPlanePanel("y = x^9 ");
+        CartesianPlanePanel e = new CartesianPlanePanel("y = x");
 
         // Setting all the number buttons to have a Windows system default esque look
 

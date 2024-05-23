@@ -15,7 +15,7 @@ public class CartesianPlanePanel extends JPanel {
 
     public CartesianPlanePanel(String equation) {
         points = new ArrayList<>();
-        FunctionParser parser = new FunctionParser();
+        FunctionValidator parser = new FunctionValidator();
         PointGenerator generator = new PointGenerator();
 
         if (parser.isValidEquation(equation)) {

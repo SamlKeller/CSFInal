@@ -9,6 +9,8 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
     private MainFrame mainFrame;
     private Timer timer;
     private List<Animatable> animations;
+    public int panelHeight = 600; // Assume a fixed height for the panel
+    public int panelWidth = 800; // Assume a fixed width for the panel
 
     public TitleScreenPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -20,13 +22,11 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
         subtitle.setFont(new Font("Arial", Font.PLAIN, 28));
         setLayout(null);  // Use absolute positioning
 
-        int panelWidth = 800; // Assume a fixed width for the panel
-        int panelHeight = 600; // Assume a fixed height for the panel
 
         // Center the square
         int squareSize = 100;
         int squareX = (panelWidth - squareSize) / 2;
-        int squareY = (panelHeight - squareSize) / 2;
+        int squareY = ((panelHeight - squareSize) / 2) - 100;
 
         ImageIcon image = new ImageIcon("icon.png");
         JLabel imageLabel = new JLabel(image); 
@@ -80,5 +80,13 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
     @Override
     public JPanel getPanel() {
         return this;
+    }
+
+    public void setPanelHeight (int x) {
+        panelHeight = x;
+    }
+
+    public void setPanelWidth (int x) {
+        panelWidth = x;
     }
 }

@@ -3,18 +3,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FunctionParser {
-    private FunctionValidator validator;
     private CoefficientParser coefficientParser;
     private ExponentParser exponentParser;
 
     public FunctionParser() {
-        validator = new FunctionValidator();
         coefficientParser = new CoefficientParser();
         exponentParser = new ExponentParser();
-    }
-
-    public boolean isValidEquation(String equation) {
-        return validator.isValidEquation(equation);
     }
 
     public ArrayList<Double> parseCoefficients(String equation) {

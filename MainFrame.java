@@ -11,6 +11,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+
         titleScreenPanel = new TitleScreenPanel(this);
         add(titleScreenPanel.getPanel());
     }

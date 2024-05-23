@@ -34,7 +34,7 @@ public class FunctionParser {
         }
 
         coefficients.remove(coefficients.size() - 1);
-        coefficients.remove(coefficients.size() - 1); // Remove last coefficient
+    
         return coefficients;
     }
 
@@ -53,7 +53,6 @@ public class FunctionParser {
         }
 
         exponents.remove(exponents.size() - 1);
-        exponents.remove(exponents.size() - 1); // Remove last exponent
         return exponents;
     }
 }

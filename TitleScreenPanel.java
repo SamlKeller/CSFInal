@@ -26,6 +26,10 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
         int squareX = (panelWidth - squareSize) / 2;
         int squareY = (panelHeight - squareSize) / 2;
 
+        ImageIcon image = new ImageIcon("icon.png");
+        JLabel imageLabel = new JLabel(image); 
+        add(imageLabel);
+
         // Position the label below the square
         int labelY = squareY + squareSize + 20;
 

@@ -14,6 +14,7 @@ public class MainFrame extends JFrame {
 
         titleScreenPanel = new TitleScreenPanel(this);
         add(titleScreenPanel.getPanel());
+        
     }
 
     public void showControlPanel() {
@@ -28,6 +29,8 @@ public class MainFrame extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
+            ImageIcon img = new ImageIcon("./icon.png");
+            frame.setIconImage(img.getImage());
             frame.setVisible(true);
         });
     }

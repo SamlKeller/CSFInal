@@ -9,7 +9,7 @@ public class CoefficientParser {
         try {
             return Double.parseDouble(coefficient);
         } catch (NumberFormatException e) {
-            return 0.0; // Fallback to 0 for invalid coefficients
+            return 0.0; // Fallout to 0 for invalid coefficients
         }
     }
 }

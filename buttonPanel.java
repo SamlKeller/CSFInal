@@ -11,7 +11,7 @@ class buttonPanel extends JPanel {
    public buttonPanel() {   
       // Button panel 
       setLayout(new GridLayout(3,5));
-      setSize(250,475);
+      setSize(250, 475);
       
       // Instantiating buttons
       for (int x = 0; x < 10; x++) {
@@ -39,8 +39,7 @@ class buttonPanel extends JPanel {
       for (int g = 0; g < operationsButtons.length; g++) {
          add(operationsButtons[g]);
       }
-      
-      
+        
    }
    
    
@@ -56,7 +55,7 @@ class buttonPanel extends JPanel {
    numberButtons = temp; 
   }
   
-  public void setOperationsButtons(JButton[] temp) {
+  public void setOperationsButtons(JButton[] temp) { 
    operationsButtons = temp; 
   }
    

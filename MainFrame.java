@@ -1,16 +1,14 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class MainFrame extends JFrame {
     private SwitchablePanel titleScreenPanel;
     private SwitchablePanel finalProjectPanel;
 
     public MainFrame() {
-        setTitle("Graphing Calculator");
+        setTitle("Foundations of Computer Science Final Project - Graphing Calculator");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
 
         titleScreenPanel = new TitleScreenPanel(this);
         add(titleScreenPanel.getPanel());

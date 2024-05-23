@@ -46,8 +46,6 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
 
         CartesianPlanePanel e = new CartesianPlanePanel("y = x");
 
-        // Setting all the number buttons to have a Windows system default esque look
-
         for (int j = 0; j < numberButtons.length; j++) {
             numberButtons[j].addActionListener(new numberButtonListener());
         }

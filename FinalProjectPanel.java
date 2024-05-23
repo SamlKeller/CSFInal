@@ -6,7 +6,6 @@ import javax.swing.border.*;
 import java.util.ArrayList;
 
 public class FinalProjectPanel extends JPanel implements SwitchablePanel {
-    // Fields
     public static final int FRAME = 500;
     private static final Color BACKGROUND = new Color(255, 255, 255);
     private BufferedImage myImage;
@@ -52,7 +51,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         for (int j = 0; j < numberButtons.length; j++) {
             numberButtons[j].addActionListener(new numberButtonListener());
         }
-
+        
         for (int h = 0; h < operationsButtons.length; h++) {
             operationsButtons[h].addActionListener(new operationsButtonListener());
         }

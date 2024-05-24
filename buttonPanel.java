@@ -55,6 +55,8 @@ class buttonPanel extends JPanel {
         buttonGrid[2][3] = operationsButtons[3];
         buttonGrid[2][4] = operationsButtons[4];
 
+
+
         // Adding the buttons from the 2D array to the panel
         for (int row = 0; row < buttonGrid.length; row++) {
             for (int col = 0; col < buttonGrid[row].length; col++) {

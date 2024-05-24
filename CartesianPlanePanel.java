@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public class CartesianPlanePanel extends JPanel {
             addMouseWheelListener(zoomHandler);
             addMouseMotionListener(mouseHandler);
             addMouseListener(mouseHandler);
+            setFocusable(true);
+            requestFocusInWindow();
         } else {
             EquationValidator validator = new EquationValidator();
             try {
@@ -48,8 +51,8 @@ public class CartesianPlanePanel extends JPanel {
         Dimension size = getSize();
         xCenter = (size.width / 2) + xMod;
         yCenter = (size.height / 2) + yMod;
-        g2d.drawLine(0, (int)yCenter, size.width, (int)yCenter);
-        g2d.drawLine((int)xCenter, 0, (int)xCenter, size.height);
+        g2d.drawLine(0, (int) yCenter, size.width, (int) yCenter);
+        g2d.drawLine((int) xCenter, 0, (int) xCenter, size.height);
 
         // Draw smooth line
         if (!points.isEmpty()) {
@@ -61,7 +64,9 @@ public class CartesianPlanePanel extends JPanel {
 
             for (int i = 1; i < points.size(); i++) {
                 Point p = points.get(i);
-                path.lineTo(xCenter + p.x * scale * zoomLevel, yCenter - p.y * scale * zoomLevel);
+                double x = xCenter + p.x * scale * zoomLevel;
+                double y = yCenter - p.y * scale * zoomLevel;
+                path.lineTo(x, y);
             }
 
             g2d.setColor(Color.RED);
@@ -86,6 +91,14 @@ public class CartesianPlanePanel extends JPanel {
     public void setModifiers(double xMod, double yMod) {
         this.xMod = xMod;
         this.yMod = yMod;
+    }
+
+    public double getXMod() {
+        return xMod;
+    }
+
+    public double getYMod() {
+        return yMod;
     }
 
     public int getClickOriginX() {

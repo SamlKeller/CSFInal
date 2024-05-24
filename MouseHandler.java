@@ -3,6 +3,7 @@ import java.awt.event.MouseEvent;
 
 public class MouseHandler implements MouseInputListener {
     private CartesianPlanePanel panel;
+    private int prevX, prevY;
 
     public MouseHandler(CartesianPlanePanel panel) {
         this.panel = panel;
@@ -10,9 +11,16 @@ public class MouseHandler implements MouseInputListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        double xMod = e.getX() - panel.getClickOriginX();
-        double yMod = e.getY() - panel.getClickOriginY();
-        panel.setModifiers(xMod, yMod);
+        int deltaX = e.getX() - prevX;
+        int deltaY = e.getY() - prevY;
+
+        prevX = e.getX();
+        prevY = e.getY();
+
+        double newXMod = panel.getXMod() + deltaX;
+        double newYMod = panel.getYMod() + deltaY;
+
+        panel.setModifiers(newXMod, newYMod);
         panel.repaint();
     }
 
@@ -26,7 +34,9 @@ public class MouseHandler implements MouseInputListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        panel.setClickOrigin(e.getX(), e.getY());
+        prevX = e.getX();
+        prevY = e.getY();
+        panel.setClickOrigin(prevX, prevY);
     }
 
     @Override

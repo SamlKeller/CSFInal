@@ -1,10 +1,11 @@
 public class EquationValidator {
-    public double eval(final String str) throws RuntimeException {
+
+    public static double eval(final String str) throws RuntimeException {
         return new Object() {
             int pos = -1, ch;
 
             void nextChar() {
-                ch = (pos++ < str.length()) ? str.charAt(pos) : -1;
+                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
             }
 
             boolean eat(int charToEat) {
@@ -18,39 +19,42 @@ public class EquationValidator {
 
             double parse() {
                 nextChar();
-                if (pos < str.length())  {
-                    throw new RuntimeException("Unexpected: " + (char)ch);
-                } else {
-                    return parseExpression();
-                }
+                double x = parseExpression();
+                if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+                return x;
             }
 
-            //the flow of the two functions below is quite odd -- why would we allow for this infinite loop system when a simple while loop would work?
+            // Grammar:
+            // expression = term | expression `+` term | expression `-` term
+            // term = factor | term `*` factor | term `/` factor
+            // factor = `+` factor | `-` factor | `(` expression `)` | number
+            //        | functionName `(` expression `)` | functionName factor
+            //        | factor `^` factor
 
             double parseExpression() {
                 double x = parseTerm();
-                for (;;) { //never do this
-                    if      (eat('+')) x += parseTerm(); // addition
+                while (true) {
+                    if (eat('+')) x += parseTerm(); // addition
                     else if (eat('-')) x -= parseTerm(); // subtraction
-                    else return x;
+                    else break;
                 }
+                return x;
             }
 
-
-            //why on earth have we used this structure?  I think it's the most dangerous possible implementation of something relatively simple
             double parseTerm() {
                 double x = parseFactor();
-                for (;;) { //never do this
-                    if      (eat('*')) x *= parseFactor(); // multiplication
+                while (true) {
+                    if (eat('*')) x *= parseFactor(); // multiplication
                     else if (eat('/')) x /= parseFactor(); // division
-                    else return x;
+                    else break;
                 }
+                return x;
             }
 
             double parseFactor() {
                 if (eat('+')) return +parseFactor(); // unary plus
                 if (eat('-')) return -parseFactor(); // unary minus
-                //TODO: Understand what this function does, it's very dense and strange
+
                 double x;
                 int startPos = this.pos;
                 if (eat('(')) { // parentheses
@@ -69,9 +73,9 @@ public class EquationValidator {
                         x = parseFactor();
                     }
                     if (func.equals("sqrt")) x = Math.sqrt(x);
-                    else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
-                    else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
-                    else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+                    else if (func.equals("sin")) x = Math.sin(x); // Assume x is in radians
+                    else if (func.equals("cos")) x = Math.cos(x); // Assume x is in radians
+                    else if (func.equals("tan")) x = Math.tan(x); // Assume x is in radians
                     else throw new RuntimeException("Unknown function: " + func);
                 } else {
                     throw new RuntimeException("Unexpected: " + (char)ch);

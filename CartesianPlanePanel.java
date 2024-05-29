@@ -9,7 +9,7 @@ public class CartesianPlanePanel extends JPanel {
     private double xMod, yMod;
     private double xCenter, yCenter;
     private int scale = 425; // Adjust this value to change the initial scale
-    private double zoomLevel = 1.0; // Initial zoom level
+    private double zoomLevel = 1; // Initial zoom level
     private double maxZoomLevel = 1000; // Maximum zoom level
     private double minZoomLevel = 0.1; // Minimum zoom level
     public int clickOriginx, clickOriginy;
@@ -18,6 +18,7 @@ public class CartesianPlanePanel extends JPanel {
         points = new ArrayList<>();
         FunctionValidator parser = new FunctionValidator();
         PointGenerator generator = new PointGenerator();
+        EquationValidator validator = new EquationValidator();
 
         if (parser.isValidEquation(equation)) {
             points = generator.generatePoints(equation);
@@ -32,7 +33,7 @@ public class CartesianPlanePanel extends JPanel {
             setFocusable(true);
             requestFocusInWindow();
         } else {
-            EquationValidator validator = new EquationValidator();
+           
             try {
                 JOptionPane.showMessageDialog(this, validator.eval(equation.trim()));
             } catch (RuntimeException e) {

@@ -10,7 +10,7 @@ public class CartesianPlanePanel extends JPanel {
     private int scale = 425; // Adjust this value to change the initial scale
     private double zoomLevel = 1; // Initial zoom level
     private double maxZoomLevel = 1000; // Maximum zoom level
-    private double minZoomLevel = 0.1; // Minimum zoom level
+    private double minZoomLevel = 0.01; // Minimum zoom level
     public int clickOriginx, clickOriginy;
 
     public CartesianPlanePanel(String equation) {

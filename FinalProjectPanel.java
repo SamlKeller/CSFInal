@@ -45,7 +45,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         numberButtons = z.getNumberButtons();
         operationsButtons = z.getOperationsButtons();
 
-        CartesianPlanePanel e = new CartesianPlanePanel("y = x");
+        CartesianPlanePanel e = new CartesianPlanePanel("y = x", 1);
 
         for (int j = 0; j < numberButtons.length; j++) {
             numberButtons[j].addActionListener(new numberButtonListener());
@@ -118,20 +118,20 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                updateGraph(number.getText());
+                updateGraph(number.getText(), 1);
                 number.setText(""); // Clear the text area after updating the graph
             }
         }
     }
 
-    private void updateGraph(String equation) {
+    private void updateGraph(String equation, double resolution) {
         // Remove the existing CartesianPlanePanel
         removeAll();
         revalidate();
         repaint();
 
         // Create a new CartesianPlanePanel with the new equation
-        CartesianPlanePanel graphPanel = new CartesianPlanePanel(equation);
+        CartesianPlanePanel graphPanel = new CartesianPlanePanel(equation, resolution);
         add(graphPanel, BorderLayout.CENTER);
 
         // Add the other components back
@@ -194,7 +194,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
 
                 // Update the graph with the calculated number
                 String equation = "y = " + displayNumber;
-                updateGraph(equation);
+                updateGraph(equation, 1);
 
                 // Update the JTextArea with the calculated number
                 number.setText(Double.toString(displayNumber));

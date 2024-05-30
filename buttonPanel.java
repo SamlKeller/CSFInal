@@ -36,21 +36,13 @@ class buttonPanel extends JPanel {
         }
         operationsButtons[4].setBackground(new Color(51, 153, 255));
 
-<<<<<<< HEAD
-        // Placing number buttons into the 2D array
-        /*for (int x = 0; x < 1; x++) {
-=======
         /*  Placing number buttons into the 2D array
         for (int x = 0; x < 1; x++) {
->>>>>>> 0adb52e (stash)
             for (int i = 0; i < 4; i++) {
                 buttonGrid[x][i] = numberButtons[i*x];
             }
         }*/
-<<<<<<< HEAD
         
-=======
->>>>>>> 0adb52e (stash)
         buttonGrid[0][0] = numberButtons[0];
         buttonGrid[0][1] = numberButtons[1];
         buttonGrid[0][2] = numberButtons[2];

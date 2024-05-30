@@ -8,10 +8,10 @@ public class PointCalculator {
         evaluator = new FunctionEvaluator();
     }
 
-    public ArrayList<Point> calculatePoints(ArrayList<Double> coefficients, ArrayList<Integer> exponents) {
+    public ArrayList<Point> calculatePoints(ArrayList<Double> coefficients, ArrayList<Integer> exponents, double resolution) {
         ArrayList<Point> points = new ArrayList<>();
-        for (int x = -10000; x <= 10000; x++) {
-            points.add(new Point(x, (int) evaluator.evaluate(coefficients, exponents, x)));
+        for (int x = -10000; x <= 10000; x += (1/resolution)) {
+            points.add(new Point(x, (int)evaluator.evaluate(coefficients, exponents, x)));
         }
         return points;
     }

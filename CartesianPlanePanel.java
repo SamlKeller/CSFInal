@@ -4,23 +4,24 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
 public class CartesianPlanePanel extends JPanel {
-    private ArrayList<Point> points;
+    public ArrayList<Point> points;
     private double xMod, yMod;
     private double xCenter, yCenter;
     private int scale = 425; // Adjust this value to change the initial scale
     private double zoomLevel = 1; // Initial zoom level
+    public double resolution = 1;
     private double maxZoomLevel = 1000; // Maximum zoom level
     private double minZoomLevel = 0.01; // Minimum zoom level
     public int clickOriginx, clickOriginy;
 
-    public CartesianPlanePanel(String equation) {
+    public CartesianPlanePanel(String equation, double resolution) {
         points = new ArrayList<>();
         FunctionValidator parser = new FunctionValidator();
         PointGenerator generator = new PointGenerator();
         EquationValidator validator = new EquationValidator();
 
         if (parser.isValidEquation(equation)) {
-            points = generator.generatePoints(equation);
+            points = generator.generatePoints(equation, 1);
 
             ZoomHandler zoomHandler = new ZoomHandler(this);
             MouseHandler mouseHandler = new MouseHandler(this);
@@ -32,7 +33,6 @@ public class CartesianPlanePanel extends JPanel {
             setFocusable(true);
             requestFocusInWindow();
         } else {
-           
             try {
                 JOptionPane.showMessageDialog(this, validator.eval(equation.trim()));
             } catch (RuntimeException e) {
@@ -77,6 +77,7 @@ public class CartesianPlanePanel extends JPanel {
     public void zoomIn() {
         if (zoomLevel < maxZoomLevel) {
             zoomLevel *= 1.2;
+            resolution++;
             repaint();
         }
     }
@@ -84,6 +85,7 @@ public class CartesianPlanePanel extends JPanel {
     public void zoomOut() {
         if (zoomLevel > minZoomLevel) {
             zoomLevel /= 1.2; // Adjust the zoom factor as needed
+            resolution++;
             repaint();
         }
     }
@@ -107,6 +109,14 @@ public class CartesianPlanePanel extends JPanel {
 
     public int getClickOriginY() {
         return clickOriginy;
+    }
+
+    public void setPoints (ArrayList<Point> x) {
+        points = x;
+    }
+
+    public ArrayList<Point> getPoints () {
+        return points;
     }
 
     public void setClickOrigin(int x, int y) {

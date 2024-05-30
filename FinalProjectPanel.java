@@ -45,7 +45,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         numberButtons = z.getNumberButtons();
         operationsButtons = z.getOperationsButtons();
 
-        CartesianPlanePanel e = new CartesianPlanePanel("y = x", 1);
+        CartesianPlanePanel e = new CartesianPlanePanel("y = x");
 
         for (int j = 0; j < numberButtons.length; j++) {
             numberButtons[j].addActionListener(new numberButtonListener());
@@ -131,7 +131,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
         repaint();
 
         // Create a new CartesianPlanePanel with the new equation
-        CartesianPlanePanel graphPanel = new CartesianPlanePanel(equation, resolution);
+        CartesianPlanePanel graphPanel = new CartesianPlanePanel(equation);
         add(graphPanel, BorderLayout.CENTER);
 
         // Add the other components back

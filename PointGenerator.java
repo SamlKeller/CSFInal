@@ -10,9 +10,9 @@ public class PointGenerator {
         calculator = new PointCalculator();
     }
 
-    public ArrayList<Point> generatePoints(String equation, double resolution) {
+    public ArrayList<Point> generatePoints(String equation, double zoomLevel) {
         ArrayList<Double> coefficients = parser.parseCoefficients(equation);
         ArrayList<Integer> exponents = parser.parseExponents(equation);
-        return calculator.calculatePoints(coefficients, exponents, resolution);
+        return calculator.calculatePoints(coefficients, exponents, zoomLevel);
     }
 }

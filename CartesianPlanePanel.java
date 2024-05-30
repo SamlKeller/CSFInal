@@ -9,19 +9,21 @@ public class CartesianPlanePanel extends JPanel {
     private double xCenter, yCenter;
     private int scale = 425; // Adjust this value to change the initial scale
     private double zoomLevel = 1; // Initial zoom level
-    public double resolution = 1;
+    public double resolution = 1; // Resolution factor
     private double maxZoomLevel = 1000; // Maximum zoom level
     private double minZoomLevel = 0.01; // Minimum zoom level
     public int clickOriginx, clickOriginy;
+    private String equation;
 
-    public CartesianPlanePanel(String equation, double resolution) {
+    public CartesianPlanePanel(String equation) {
+        this.equation = equation;
         points = new ArrayList<>();
         FunctionValidator parser = new FunctionValidator();
         PointGenerator generator = new PointGenerator();
         EquationValidator validator = new EquationValidator();
 
         if (parser.isValidEquation(equation)) {
-            points = generator.generatePoints(equation, 1);
+            points = generator.generatePoints(equation, resolution);
 
             ZoomHandler zoomHandler = new ZoomHandler(this);
             MouseHandler mouseHandler = new MouseHandler(this);
@@ -77,7 +79,8 @@ public class CartesianPlanePanel extends JPanel {
     public void zoomIn() {
         if (zoomLevel < maxZoomLevel) {
             zoomLevel *= 1.2;
-            resolution++;
+            resolution /= 1.2; // Increase resolution as we zoom in
+            updatePoints();
             repaint();
         }
     }
@@ -85,9 +88,15 @@ public class CartesianPlanePanel extends JPanel {
     public void zoomOut() {
         if (zoomLevel > minZoomLevel) {
             zoomLevel /= 1.2; // Adjust the zoom factor as needed
-            resolution++;
+            resolution *= 1.2; // Decrease resolution as we zoom out
+            updatePoints();
             repaint();
         }
+    }
+
+    private void updatePoints() {
+        PointGenerator generator = new PointGenerator();
+        points = generator.generatePoints(equation, resolution);
     }
 
     public void setModifiers(double xMod, double yMod) {
@@ -111,11 +120,11 @@ public class CartesianPlanePanel extends JPanel {
         return clickOriginy;
     }
 
-    public void setPoints (ArrayList<Point> x) {
+    public void setPoints(ArrayList<Point> x) {
         points = x;
     }
 
-    public ArrayList<Point> getPoints () {
+    public ArrayList<Point> getPoints() {
         return points;
     }
 

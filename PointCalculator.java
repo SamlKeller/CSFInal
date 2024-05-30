@@ -2,17 +2,24 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class PointCalculator {
-    private FunctionEvaluator evaluator;
 
-    public PointCalculator() {
-        evaluator = new FunctionEvaluator();
+    public ArrayList<Point> calculatePoints(ArrayList<Double> coefficients, ArrayList<Integer> exponents, double zoomLevel) {
+        ArrayList<Point> points = new ArrayList<>();
+        double stepSize = 0.01 / zoomLevel; // Finer step size for higher zoom levels
+
+        for (double x = -100; x <= 100; x += stepSize) {
+            double y = calculateY(coefficients, exponents, x);
+            points.add(new Point((int) (x * 100), (int) (y * 100))); // Scale for better visibility
+        }
+
+        return points;
     }
 
-    public ArrayList<Point> calculatePoints(ArrayList<Double> coefficients, ArrayList<Integer> exponents, double resolution) {
-        ArrayList<Point> points = new ArrayList<>();
-        for (int x = -10000; x <= 10000; x += (1/resolution)) {
-            points.add(new Point(x, (int)evaluator.evaluate(coefficients, exponents, x)));
+    private double calculateY(ArrayList<Double> coefficients, ArrayList<Integer> exponents, double x) {
+        double y = 0;
+        for (int i = 0; i < coefficients.size(); i++) {
+            y += coefficients.get(i) * Math.pow(x, exponents.get(i));
         }
-        return points;
+        return y;
     }
 }

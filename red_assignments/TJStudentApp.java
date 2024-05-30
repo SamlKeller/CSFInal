@@ -27,10 +27,11 @@ class TJStudent {
     }
 
     public TJStudent(String filename) throws Exception {
-        Scanner infile = new Scanner(new File(filename));
-        name = infile.nextLine().strip();
-        year = infile.nextLine().strip();
-        age = Integer.parseInt(infile.nextLine().strip());
+        try (Scanner infile = new Scanner(new File(filename))) {
+            name = infile.nextLine().strip();
+            year = infile.nextLine().strip();
+            age = Integer.parseInt(infile.nextLine().strip());
+        }
     }
 
     public String getName() { return name; }

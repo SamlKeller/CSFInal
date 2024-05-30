@@ -1,6 +1,6 @@
 public class EquationValidator {
 
-    public static double eval(final String str) throws RuntimeException {
+    public double eval(final String str) throws RuntimeException {
         return new Object() {
             int pos = -1, ch;
 

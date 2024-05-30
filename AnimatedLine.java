@@ -1,9 +1,9 @@
 import java.awt.*;
 
 public class AnimatedLine implements Animatable {
-    private int[][] points;
-    private int step;
-    private int maxSteps;
+    protected int[][] points; // Changed to protected
+    protected int step; // Changed to protected
+    protected int maxSteps; // Changed to protected
 
     public AnimatedLine(int x1, int y1, int x2, int y2, int maxSteps) {
         this.step = 0;

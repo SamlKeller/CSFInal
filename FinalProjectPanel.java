@@ -12,6 +12,7 @@ public class FinalProjectPanel extends JPanel implements SwitchablePanel {
     private Graphics myBuffer;
     private Timer t;
     private ArrayList<Animatable> animationObjects;
+    @SuppressWarnings("unused")
     private int frameCounter;
     private double displayNumber = 0;
     JTextArea number = new JTextArea(Double.toString(displayNumber));

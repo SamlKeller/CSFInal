@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitleScreenPanel extends JPanel implements SwitchablePanel {
+    @SuppressWarnings("unused")
     private MainFrame mainFrame;
     private Timer timer;
     private List<Animatable> animations;

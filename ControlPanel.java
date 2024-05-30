@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlPanel extends JPanel {
+    @SuppressWarnings("unused")
     private MainFrame mainFrame;
     private JTextField equationField;
 

@@ -49,7 +49,7 @@ public class TitleScreenPanel extends JPanel implements SwitchablePanel {
         int curveY2 = squareY + curvePadding;
         int curveX3 = squareX + squareSize - curvePadding;
         int curveY3 = squareY + squareSize / 2;
-        animations.add(new AnimatedCurve(curveX1, curveY1, curveX2, curveY2, curveX3, curveY3, 100));
+        animations.add(new AnimatedCurve(curveX1, curveY1, curveX2, curveY2, curveX3, curveY3, 20));
 
         timer = new Timer(50, e -> {
             for (Animatable anim : animations) {

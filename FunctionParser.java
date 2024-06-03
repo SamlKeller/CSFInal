@@ -101,10 +101,6 @@ public class FunctionParser {
             }
         }
 
-        // Remove the last exponent which is not part of a valid term
-        
-
-        System.out.println(exponents);
         return exponents;
     }
 }

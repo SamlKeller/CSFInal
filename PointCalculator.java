@@ -5,11 +5,10 @@ public class PointCalculator {
 
     public ArrayList<Point> calculatePoints(ArrayList<Double> coefficients, ArrayList<Integer> exponents, double zoomLevel) {
         ArrayList<Point> points = new ArrayList<>();
-        double stepSize = 0.01 / zoomLevel; // Finer step size for higher zoom levels
 
-        for (double x = -100; x <= 100; x += stepSize) {
+        for (double x = -100; x <= 100; x += 1) {
             double y = calculateY(coefficients, exponents, x);
-            points.add(new Point((int) (x * 100), (int) (y * 100))); // Scale for better visibility
+            points.add(new Point((int)x, (int)y));
         }
 
         return points;

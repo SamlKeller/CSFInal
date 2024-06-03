@@ -8,7 +8,7 @@ public class ExponentParser {
             return parsedExponent;
         } catch (NumberFormatException e) {
             System.out.println("Invalid exponent format: '" + exponent + "'. Returning exponent 1 for constants.");
-            return 1; // Exponent is 1 for constants //Note: this was set to zero previously, was this the problem?
+            return 1; // Exponent is 1 for constants
         }
     }
 }

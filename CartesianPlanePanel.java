@@ -8,9 +8,9 @@ public class CartesianPlanePanel extends JPanel {
     private double xMod, yMod;
     private double xCenter, yCenter;
     private int scale = 425; // Adjust this value to change the initial scale
-    private double zoomLevel = 1; // Initial zoom level
+    private double zoomLevel = 0.3; // Initial zoom level
     public double resolution = 1; // Resolution factor
-    private double maxZoomLevel = 1000; // Maximum zoom level
+    private double maxZoomLevel = 1; // Maximum zoom level
     private double minZoomLevel = 0.01; // Minimum zoom level
     public int clickOriginx, clickOriginy;
     private String equation;
@@ -38,7 +38,8 @@ public class CartesianPlanePanel extends JPanel {
             try {
                 JOptionPane.showMessageDialog(this, validator.eval(equation.trim()));
             } catch (RuntimeException e) {
-                JOptionPane.showMessageDialog(this, "Error evaluating function");
+                //JOptionPane.showMessageDialog(this, "Error evaluating function"); Clearly, something is wrong with our rendering pipeline -- this results in an infinite error loop
+                //Are we running this every frame?  That would be ... bad
             }
         }
     }
